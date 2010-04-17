@@ -6,8 +6,8 @@ add xpath selectors to tell jath where the data should come from.
 
 # Synopsis
 turn 
-<raw>
-	<statuses userid="djn">
+<div>
+	<statuses>
 		<status id="1">
 			<message>Hello</message>
 		</status>
@@ -17,7 +17,7 @@ turn
 			<status id="5">
 		</status>
 	</statuses>
-</raw>
+</div>
 
 into
 `var result = [ { id: "1", message: "Hello" }, { id: "3", message: "Goodbye" }, ... ];`
