@@ -1,3 +1,10 @@
+TODO: support for dates and other types
+xml namespace support
+only works in firefox
+
+
+===================== old =============================
+
 this is an idea for a javascript object literal parsing language template for
 parsing xml .. 
 
