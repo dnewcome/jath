@@ -27,7 +27,7 @@ add xpath selectors to tell jath where the data should come from.
 **using:**
 
 	var xml = <your AJAXy call here>;
-	var template = { id: "@id", message: "message" };
+	var template = [ "//status", { id: "@id", message: "message" } ];
 	var result = Jath.parse( template, xml );
 
 Check out the samples.html for more examples.
