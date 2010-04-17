@@ -10,18 +10,18 @@
 				// the template to use for parsing the xml
 				var template = [ "//label", { id: "@id", added: "@added" } ];
 				
-				parse( template, xmlDoc );
+				parse( template, xmlDoc, xmlDoc );
 			}			
 				
-			function parse( template, xmldoc ) {
+			function parse( template, xmldoc, node ) {
 				if( typeOf( template ) === 'array' ) {
-					parseArray( template, xmldoc, xmldoc );
+					parseArray( template, xmldoc, node );
 				}
 				else if( typeOf( template ) === 'object' ) {
-					parseObject( template, xmldoc, xmldoc );
+					parseObject( template, xmldoc, node );
 				}
 				else {
-					parseItem( template, xmldoc, xmldoc );
+					parseItem( template, xmldoc, node );
 				}
 			}
 			
