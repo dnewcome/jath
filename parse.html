@@ -15,13 +15,13 @@
 				
 			function parse( template, xmldoc, node ) {
 				if( typeOf( template ) === 'array' ) {
-					parseArray( template, xmldoc, node );
+					return parseArray( template, xmldoc, node );
 				}
 				else if( typeOf( template ) === 'object' ) {
-					parseObject( template, xmldoc, node );
+					return parseObject( template, xmldoc, node );
 				}
 				else {
-					parseItem( template, xmldoc, node );
+					return parseItem( template, xmldoc, node );
 				}
 			}
 			
@@ -34,7 +34,7 @@
 				var xpathResult = xmldoc.evaluate( template[0], node, null, XPathResult.ANY_TYPE, null );
 				var thisNode;
 				while( thisNode = xpathResult.iterateNext() ) {
-					retVal.push( parseObject( template[1], xmldoc, thisNode ) );
+					retVal.push( parse( template[1], xmldoc, thisNode ) );
 				}
 				return retVal;
 			}
@@ -43,10 +43,13 @@
 				var item;
 				var newitem = {};
 				for( item in template ) {
-					newitem[item] = xmldoc.evaluate( template[item], node, null, XPathResult.STRING_TYPE, null ).stringValue;
-					console.log( newitem[item] );
+					newitem[item] = parseItem( template[item], xmldoc, node );
 				}
 				return newitem;
+			}
+			
+			function parseItem( template, xmldoc, node ) {
+				return xmldoc.evaluate( template, node, null, XPathResult.STRING_TYPE, null ).stringValue;
 			}
 			
 			/**
