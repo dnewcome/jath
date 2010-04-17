@@ -26,9 +26,9 @@ into
 
 using
 
-`var xml = <your AJAXy call here>;`
-`var template = { id: "@id", message: "message" };`
-`var result = Jath.parse( template, xml );`
+	var xml = <your AJAXy call here>;
+	var template = { id: "@id", message: "message" };
+	var result = Jath.parse( template, xml );
 
 Check out the samples.html for more examples.
 
