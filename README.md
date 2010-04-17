@@ -1,10 +1,10 @@
-= About
+# About
 Jath is a template language that lets you declaratively parse xml documents into
 javascript objects using json markup and xpath selectors. The idea is to write
 some json markup that looks like the object that you want to end up with, and then
 add xpath selectors to tell jath where the data should come from.
 
-= Example
+# Example
 Say we were parsing an xml stream of status updates from a service
 like Twitter. The data might look something like this:
 
@@ -71,11 +71,11 @@ var result = [ { id: "1", message: "Hello" }, { id: "3", message: "Goodbye" }, .
 Jath does not support anything other than string terminal data right now, hopefully
 that will change soon.
 
-= Status:
+# Status:
 This software is a proof of concept. There are edge cases that it cannot handle,
 and isn't production-ready.
 
-= Limitations:
+# Limitations:
 - Only supports Firefox
 - No built-in support for xml namespaces. This can be worked aroun by using selectors
 in the form of:
