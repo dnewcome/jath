@@ -10,31 +10,43 @@
 				// the template to use for parsing the xml
 				var template = [ "//label", { id: "@id", added: "@added" } ];
 				
-				parseArray( template, xmlDoc );
+				parse( template, xmlDoc );
 			}			
+				
+			function parse( template, xmldoc ) {
+				if( typeOf( template ) === 'array' ) {
+					parseArray( template, xmldoc, xmldoc );
+				}
+				else if( typeOf( template ) === 'object' ) {
+					parseObject( template, xmldoc, xmldoc );
+				}
+				else {
+					parseItem( template, xmldoc, xmldoc );
+				}
+			}
 			
 			/**
 			* Parse xml according to the given json template
 			*/
-			function parseArray( template, xmldoc ) {
+			function parseArray( template, xmldoc, node ) {
 				var retVal = [];
 				
-				var xpathResult = xmldoc.evaluate( template[0], xmldoc, null, XPathResult.ANY_TYPE, null );
+				var xpathResult = xmldoc.evaluate( template[0], node, null, XPathResult.ANY_TYPE, null );
 				var thisNode;
 				while( thisNode = xpathResult.iterateNext() ) {
-					var item;
-					var newitem = {};
-					for( item in template[1] ) {
-						newitem[item] = xmldoc.evaluate( template[1][item], thisNode, null, XPathResult.STRING_TYPE, null ).stringValue;
-						console.log( newitem[item] );
-					}
-					retVal.push( newitem );
+					retVal.push( parseObject( template[1], xmldoc, thisNode ) );
 				}
 				return retVal;
 			}
 			
-			function parse() {
-			
+			function parseObject( template, xmldoc, node ) {
+				var item;
+				var newitem = {};
+				for( item in template ) {
+					newitem[item] = xmldoc.evaluate( template[item], node, null, XPathResult.STRING_TYPE, null ).stringValue;
+					console.log( newitem[item] );
+				}
+				return newitem;
 			}
 			
 			/**
