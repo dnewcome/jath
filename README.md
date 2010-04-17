@@ -5,6 +5,7 @@ some json markup that looks like the object that you want to end up with, and th
 add xpath selectors to tell jath where the data should come from.
 
 # Synopsis
+
 **Turn:**
 
 	<statuses userid="djn">
@@ -18,9 +19,11 @@ add xpath selectors to tell jath where the data should come from.
 		</status>
 	</statuses>
 
+
 **into:**
 
 	var result = [ { id: "1", message: "Hello" }, { id: "3", message: "Goodbye" }, ... ];
+
 
 **using:**
 
