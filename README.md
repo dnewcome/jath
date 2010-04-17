@@ -5,9 +5,8 @@ some json markup that looks like the object that you want to end up with, and th
 add xpath selectors to tell jath where the data should come from.
 
 # Synopsis
-## Turn:
+**Turn:**
 
-<raw>
 	<statuses userid="djn">
 		<status id="1">
 			<message>Hello</message>
@@ -18,13 +17,12 @@ add xpath selectors to tell jath where the data should come from.
 			<status id="5">
 		</status>
 	</statuses>
-</raw>
 
-## into:
+**into:**
 
-`var result = [ { id: "1", message: "Hello" }, { id: "3", message: "Goodbye" }, ... ];`
+	var result = [ { id: "1", message: "Hello" }, { id: "3", message: "Goodbye" }, ... ];
 
-## using:
+**using:**
 
 	var xml = <your AJAXy call here>;
 	var template = { id: "@id", message: "message" };
