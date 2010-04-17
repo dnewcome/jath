@@ -8,30 +8,33 @@
 			function load() {
 				
 				// the template to use for parsing the xml
-				var template = { id: "@id", added: "@added" };
+				var template = [ "//label", { id: "@id", added: "@added" } ];
 				
-				parse( template, xmlDoc );
+				parseArray( template, xmlDoc );
 			}			
 			
 			/**
 			* Parse xml according to the given json template
 			*/
-			function parse( template, xmldoc ) {
+			function parseArray( template, xmldoc ) {
 				var retVal = [];
 				
-				var xpathResult = xmldoc.evaluate( "//label", xmldoc, null, XPathResult.ANY_TYPE, null );
-				var thisNode = xpathResult.iterateNext();
-				while( thisNode ) {
+				var xpathResult = xmldoc.evaluate( template[0], xmldoc, null, XPathResult.ANY_TYPE, null );
+				var thisNode;
+				while( thisNode = xpathResult.iterateNext() ) {
 					var item;
 					var newitem = {};
-					for( item in template ) {
-						newitem[item] = xmldoc.evaluate( template[item], thisNode, null, XPathResult.STRING_TYPE, null ).stringValue;
+					for( item in template[1] ) {
+						newitem[item] = xmldoc.evaluate( template[1][item], thisNode, null, XPathResult.STRING_TYPE, null ).stringValue;
 						console.log( newitem[item] );
 					}
 					retVal.push( newitem );
-					thisNode = xpathResult.iterateNext();
 				}
 				return retVal;
+			}
+			
+			function parse() {
+			
 			}
 			
 			/**
