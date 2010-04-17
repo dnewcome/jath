@@ -30,7 +30,7 @@ add xpath selectors to tell jath where the data should come from.
 	var template = [ "//status", { id: "@id", message: "message" } ];
 	var result = Jath.parse( template, xml );
 
-Check out the samples.html for more examples.
+Check out samples.html for more examples.
 
 # Example
 Say we were parsing an xml stream of status updates from a service
