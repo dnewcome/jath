@@ -34,16 +34,16 @@ Say we were parsing an xml stream of status updates from a service
 like Twitter. The data might look something like this:
 
 <raw>
-<statuses userid="djn">
-	<status id="1">
-		<message>Hello</message>
-	</status>
-	<status id="3">
-		<message>Goodbye</message>
-	</status>
-	<status id="5">
-	</status>
-</statuses>
+	<statuses userid="djn">
+		<status id="1">
+			<message>Hello</message>
+		</status>
+		<status id="3">
+			<message>Goodbye</message>
+		</status>
+		<status id="5">
+		</status>
+	</statuses>
 </raw>
 
 We want to consume this data on the client in javascript. Let's start with
