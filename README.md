@@ -24,9 +24,9 @@ into
 `var result = [ { id: "1", message: "Hello" }, { id: "3", message: "Goodbye" }, ... ];`
 
 using
-'var xml = <your AJAXy call here>;
-var template = { id: "@id", message: "message" };`
-var result = Jath.parse( template, xml )`
+`var xml = <your AJAXy call here>;
+var template = { id: "@id", message: "message" };
+var result = Jath.parse( template, xml );`
 
 Check out the samples.html for more examples.
 
