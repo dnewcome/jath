@@ -4,6 +4,32 @@ javascript objects using json markup and xpath selectors. The idea is to write
 some json markup that looks like the object that you want to end up with, and then
 add xpath selectors to tell jath where the data should come from.
 
+# Synopsis
+turn 
+<raw note="raw tag is part of markdown, not the actual xml here">
+<statuses>
+	<status id="1">
+		<message>Hello</message>
+	</status>
+	<status id="3">
+		<message>Goodbye</message>
+	</status>
+	<status id="5">
+	</status>
+...
+</statuses>
+</raw>
+
+into
+`var result = [ { id: "1", message: "Hello" }, { id: "3", message: "Goodbye" }, ... ];`
+
+using
+'var xml = <your AJAXy call here>;
+var template = { id: "@id", message: "message" };`
+var result = Jath.parse( template, xml )`
+
+Check out the samples.html for more examples.
+
 # Example
 Say we were parsing an xml stream of status updates from a service
 like Twitter. The data might look something like this:
