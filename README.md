@@ -7,7 +7,7 @@ add xpath selectors to tell jath where the data should come from.
 # Synopsis
 turn 
 <raw>
-	<statuses>
+	<statuses userid="djn">
 		<status id="1">
 			<message>Hello</message>
 		</status>
