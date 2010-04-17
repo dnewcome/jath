@@ -19,11 +19,9 @@ add xpath selectors to tell jath where the data should come from.
 		</status>
 	</statuses>
 
-
 **into:**
 
-	var result = [ { id: "1", message: "Hello" }, { id: "3", message: "Goodbye" }, ... ];
-
+[ { id: "1", message: "Hello" }, { id: "3", message: "Goodbye" }, ... ];
 
 **using:**
 
@@ -98,11 +96,11 @@ array, expressed in json, would look something like this:
 
 `var result = [ { id: "1", message: "Hello" }, { id: "3", message: "Goodbye" }, ... ];`
 
-Jath does not support anything other than string terminal data right now, hopefully
+Jath does not support anything other than string data right now, hopefully
 that will change soon.
 
 # Status:
-This software is a proof of concept. There are edge cases that it cannot handle,
+This software is a proof of concept. There are cases that it cannot handle,
 and isn't production-ready.
 
 # Limitations:
