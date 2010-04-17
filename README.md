@@ -6,6 +6,7 @@ add xpath selectors to tell jath where the data should come from.
 
 # Synopsis
 turn 
+
 <div>
 	<statuses>
 		<status id="1">
