@@ -33,8 +33,8 @@ Check out the samples.html for more examples.
 Say we were parsing an xml stream of status updates from a service
 like Twitter. The data might look something like this:
 
-<raw note="raw tag is part of markdown, not the actual xml here">
-<statuses>
+<raw>
+<statuses userid="djn">
 	<status id="1">
 		<message>Hello</message>
 	</status>
