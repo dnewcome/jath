@@ -8,7 +8,8 @@ add xpath selectors to tell jath where the data should come from.
 Say we were parsing an xml stream of status updates from a service
 like Twitter. The data might look something like this:
 
-`<statuses>
+`
+<statuses>
 	<status id="1">
 		<message>Hello</message>
 	</status>
@@ -18,7 +19,8 @@ like Twitter. The data might look something like this:
 	<status id="5">
 	</status>
 ...
-</statuses>`
+</statuses>
+`
 
 We want to consume this data on the client in javascript. Let's start with
 a template that will create our status object. We want to have the id and the
@@ -77,10 +79,10 @@ and isn't production-ready.
 
 # Limitations:
 - Only supports Firefox
-- No built-in support for xml namespaces. This can be worked aroun by using selectors
+- No built-in support for xml namespaces. This can be worked around by using selectors
 in the form of:
 
-[namespace-uri()='http://www.w3.org/1999/xhtml' and name()='p' and @id='_myid']
+`[namespace-uri()='http://www.w3.org/1999/xhtml' and name()='p' and @id='_myid']`
 
 see: https://developer.mozilla.org/en/Introduction_to_using_XPath_in_JavaScript
 
