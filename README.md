@@ -6,7 +6,7 @@ add xpath selectors to tell jath where the data should come from.
 
 # Synopsis
 turn 
-<raw note="raw tag is part of markdown, not the actual xml here">
+<raw>
 <statuses>
 	<status id="1">
 		<message>Hello</message>
@@ -14,7 +14,7 @@ turn
 	<status id="3">
 		<message>Goodbye</message>
 	</status>
-	<status id="5">
+		<status id="5">
 	</status>
 </statuses>
 </raw>
