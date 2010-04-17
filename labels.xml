@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
+<!-- 
+	labels.xml is XML data used by the examples. Taken from:
+	http://www.ibm.com/developerworks/xml/library/x-ffox3/
+-->
 <labels>
   <label id='ep' added="2003-06-10">
     <name>Ezra Pound</name>
