@@ -1,0 +1,25 @@
+this is an idea for a javascript object literal parsing language template for
+parsing xml .. 
+
+THe idea is that we can create a json object literal that represents the form
+of the data we want to end up with, and we will give xpath expressions for 
+tagging the data that we want to map.'
+
+I can't figure out what to do with arrays yet though..
+
+how should the template look?
+var template = { array: "//label" };
+
+this would create an array using the <label> nodes as the items.
+but.. how would we populate the actual nodes?
+
+maybe it needs to look more like this:
+var template = { type: "array", selector: "//label", item: { item template.... } };
+
+I'd like to make it look like array syntax, but I'm not sure how this would work...
+var template = [ { item template } ];
+
+not sure how we can do this.. unless the item template itself contains the selector...
+
+I'm thinking now that the first item of the array should be the selector
+{ attr1: "@foo", attr2: "@bar", items: [ "//item", { template... } ] }

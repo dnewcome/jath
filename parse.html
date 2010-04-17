@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+	<head>
+		<script language="javascript">
+			
+			var xmlDoc;
+			
+			function load() {
+				
+				// the template to use for parsing the xml
+				var template = { id: "@id", added: "@added" };
+				var xmlDoc = document.implementation.createDocument("", "", null);
+				xmlDoc.load("labels.xml");
+				
+				parse( template, xmlDoc );
+			}			
+			
+			/**
+			* Parse xml according to the given json template
+			*/
+			function parse( template, xmldoc ) {
+				var retVal = [];
+				
+				var xpathResult = xmldoc.evaluate( "//label", xmldoc, null, XPathResult.ANY_TYPE, null );
+				var thisNode = xpathResult.iterateNext();
+				while( thisNode ) {
+					var item;
+					var newitem = {};
+					for( item in template ) {
+						newitem[item] = xmldoc.evaluate( template[item], thisNode, null, XPathResult.STRING_TYPE, null ).stringValue;
+						console.log( newitem[item] );
+					}
+					retVal.push( newitem );
+					thisNode = xpathResult.iterateNext();
+				}
+				return retVal;
+			}
+			
+			/**
+			* Load xml data from disk and return xml DOM
+			*/
+			function getXmlDoc() {
+				xmlDoc = document.implementation.createDocument("", "", null);
+				xmlDoc.onload = alert("ready");
+				xmlDoc.load("labels.xml");
+				
+			}
+			
+		</script>
+	</head>
+	<body onload="getXmlDoc();">
+		<button onclick="load();">Load</button>
+	</body>
+</html>
