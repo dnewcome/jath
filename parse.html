@@ -8,9 +8,28 @@
 			function load() {
 				
 				// the template to use for parsing the xml
-				var template = [ "//label", { id: "@id", added: "@added" } ];
+				// var template = [ "//label", { id: "@id", added: "@added" } ];
+				// var parsed1 = parse( template, xmlDoc, xmlDoc );
 				
-				parse( template, xmlDoc, xmlDoc );
+				var template2 = [ 
+					"//label", { 
+						id: "@id", 
+						added: "@added", 
+						address: { 
+							street: "address/street", 
+							city: "address/city" 
+						}
+					} 
+				];
+				var parsed2 = parse( template2, xmlDoc, xmlDoc );
+				
+				var template3 = [ 
+					null,
+					[ "//label", "@id" ],
+					[ "//address", "province" ]
+				];
+				var parsed3 = parse( template3, xmlDoc, xmlDoc );
+				console.log( parsed3 );
 			}			
 				
 			function parse( template, xmldoc, node ) {
@@ -31,11 +50,21 @@
 			function parseArray( template, xmldoc, node ) {
 				var retVal = [];
 				
-				var xpathResult = xmldoc.evaluate( template[0], node, null, XPathResult.ANY_TYPE, null );
-				var thisNode;
-				while( thisNode = xpathResult.iterateNext() ) {
-					retVal.push( parse( template[1], xmldoc, thisNode ) );
+				if( template[0] != null ) {
+					var xpathResult = xmldoc.evaluate( template[0], node, null, XPathResult.ANY_TYPE, null );
+					var thisNode;
+					while( thisNode = xpathResult.iterateNext() ) {
+						retVal.push( parse( template[1], xmldoc, thisNode ) );
+					}
 				}
+				// we can have an array output without iterating over the source
+				// data - in this case, current node is static 
+				else {
+					for( var i=1; i < template.length; i++ ) {
+						retVal.push( parse( template[i], xmldoc, node ) );
+					}
+				}
+				
 				return retVal;
 			}
 			
@@ -43,7 +72,7 @@
 				var item;
 				var newitem = {};
 				for( item in template ) {
-					newitem[item] = parseItem( template[item], xmldoc, node );
+					newitem[item] = parse( template[item], xmldoc, node );
 				}
 				return newitem;
 			}
