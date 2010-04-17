@@ -108,7 +108,7 @@ and isn't production-ready.
 - No built-in support for xml namespaces. This can be worked around by using selectors
 in the form of:
 
-[namespace-uri()='http://www.w3.org/1999/xhtml' and name()='p' and @id='_myid']
+`[namespace-uri()='http://www.w3.org/1999/xhtml' and name()='p' and @id='_myid']`
 
 see: https://developer.mozilla.org/en/Introduction_to_using_XPath_in_JavaScript
 
