@@ -16,7 +16,6 @@ turn
 	</status>
 	<status id="5">
 	</status>
-...
 </statuses>
 </raw>
 
@@ -44,7 +43,6 @@ like Twitter. The data might look something like this:
 	</status>
 	<status id="5">
 	</status>
-...
 </statuses>
 </raw>
 
