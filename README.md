@@ -7,16 +7,16 @@ add xpath selectors to tell jath where the data should come from.
 # Synopsis
 turn 
 <raw>
-<statuses>
-	<status id="1">
-		<message>Hello</message>
-	</status>
-	<status id="3">
-		<message>Goodbye</message>
-	</status>
-		<status id="5">
-	</status>
-</statuses>
+	<statuses>
+		<status id="1">
+			<message>Hello</message>
+		</status>
+		<status id="3">
+			<message>Goodbye</message>
+		</status>
+			<status id="5">
+		</status>
+	</statuses>
 </raw>
 
 into
