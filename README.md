@@ -1,5 +1,5 @@
 # About
-Jath is a template language that lets you declaratively parse XML documents into
+Jath is a template language that lets you declaratively transform XML documents into
 Javascript objects using JSON markup and XPath selectors. The idea is to write
 some JSON markup that looks like the object that you want to end up with, and then
 add XPath selectors to tell Jath where the data should come from.
