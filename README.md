@@ -15,13 +15,14 @@ add xpath selectors to tell jath where the data should come from.
 		<status id="3">
 			<message>Goodbye</message>
 		</status>
-			<status id="5">
-		</status>
 	</statuses>
 
 **into:**
 
-[ { id: "1", message: "Hello" }, { id: "3", message: "Goodbye" }, ... ];
+	[ 
+		{ id: "1", message: "Hello" }, 
+		{ id: "3", message: "Goodbye" } 
+	]
 
 **using:**
 
