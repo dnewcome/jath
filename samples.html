@@ -10,7 +10,7 @@
 			function runTests() {
 				var xmlDoc = getXmlDoc();
 
-				// test case with a single array of objects
+				// test case with an array of simple objects
 				var template = [ "//label", { id: "@id", added: "@added" } ];
 				var parsed1 = Jath.parse( template, xmlDoc, xmlDoc );
 				
@@ -28,8 +28,8 @@
 				var parsed2 = Jath.parse( template2, xmlDoc, xmlDoc );
 				
 				// test case with an array of arrays, the outermost of which
-				// is simply appears at the output as a container and is not 
-				// filled by iteration over the source xml data
+				// simply appears at the output as a container and is not 
+				// filled by iteration over the source XML data
 				var template3 = [ 
 					null,
 					[ "//label", "@id" ],
