@@ -9,8 +9,6 @@
 				
 				// the template to use for parsing the xml
 				var template = { id: "@id", added: "@added" };
-				var xmlDoc = document.implementation.createDocument("", "", null);
-				xmlDoc.load("labels.xml");
 				
 				parse( template, xmlDoc );
 			}			
@@ -41,9 +39,7 @@
 			*/
 			function getXmlDoc() {
 				xmlDoc = document.implementation.createDocument("", "", null);
-				xmlDoc.onload = alert("ready");
 				xmlDoc.load("labels.xml");
-				
 			}
 			
 		</script>
