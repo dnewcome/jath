@@ -1,16 +1,20 @@
 <!doctype html>
 <html>
 	<head>
+		<script src="jath.js" type="text/javascript" language="javascript"></script>
 		<script language="javascript">
-			
-			var xmlDoc;
-			
-			function load() {
+			/**
+			* Run samples as rudimentary functionality check. Later these
+			* will form the basis of a test suite.
+			*/
+			function runTests() {
+				var xmlDoc = getXmlDoc();
+
+				// test case with a single array of objects
+				var template = [ "//label", { id: "@id", added: "@added" } ];
+				var parsed1 = Jath.parse( template, xmlDoc, xmlDoc );
 				
-				// the template to use for parsing the xml
-				// var template = [ "//label", { id: "@id", added: "@added" } ];
-				// var parsed1 = parse( template, xmlDoc, xmlDoc );
-				
+				// test case with a array of nested objects
 				var template2 = [ 
 					"//label", { 
 						id: "@id", 
@@ -21,94 +25,30 @@
 						}
 					} 
 				];
-				var parsed2 = parse( template2, xmlDoc, xmlDoc );
+				var parsed2 = Jath.parse( template2, xmlDoc, xmlDoc );
 				
+				// test case with an array of arrays, the outermost of which
+				// is simply appears at the output as a container and is not 
+				// filled by iteration over the source xml data
 				var template3 = [ 
 					null,
 					[ "//label", "@id" ],
 					[ "//address", "province" ]
 				];
-				var parsed3 = parse( template3, xmlDoc, xmlDoc );
-				console.log( parsed3 );
+				var parsed3 = Jath.parse( template3, xmlDoc, xmlDoc );
 			}			
 				
-			function parse( template, xmldoc, node ) {
-				if( typeOf( template ) === 'array' ) {
-					return parseArray( template, xmldoc, node );
-				}
-				else if( typeOf( template ) === 'object' ) {
-					return parseObject( template, xmldoc, node );
-				}
-				else {
-					return parseItem( template, xmldoc, node );
-				}
-			}
-			
 			/**
-			* Parse xml according to the given json template
-			*/
-			function parseArray( template, xmldoc, node ) {
-				var retVal = [];
-				
-				if( template[0] != null ) {
-					var xpathResult = xmldoc.evaluate( template[0], node, null, XPathResult.ANY_TYPE, null );
-					var thisNode;
-					while( thisNode = xpathResult.iterateNext() ) {
-						retVal.push( parse( template[1], xmldoc, thisNode ) );
-					}
-				}
-				// we can have an array output without iterating over the source
-				// data - in this case, current node is static 
-				else {
-					for( var i=1; i < template.length; i++ ) {
-						retVal.push( parse( template[i], xmldoc, node ) );
-					}
-				}
-				
-				return retVal;
-			}
-			
-			function parseObject( template, xmldoc, node ) {
-				var item;
-				var newitem = {};
-				for( item in template ) {
-					newitem[item] = parse( template[item], xmldoc, node );
-				}
-				return newitem;
-			}
-			
-			function parseItem( template, xmldoc, node ) {
-				return xmldoc.evaluate( template, node, null, XPathResult.STRING_TYPE, null ).stringValue;
-			}
-			
-			/**
-			* Load xml data from disk and return xml DOM
+			* Load xml text data from disk
 			*/
 			function getXmlDoc() {
 				xmlDoc = document.implementation.createDocument("", "", null);
+				xmlDoc.async = false;
 				xmlDoc.load("labels.xml");
+				return xmlDoc;
 			}
-
-			// crockford's typeOf function
-			function typeOf(value) {
-			var s = typeof value;
-			if (s === 'object') {
-				if (value) {
-					if (typeof value.length === 'number' &&
-							!(value.propertyIsEnumerable('length')) &&
-							typeof value.splice === 'function') {
-						s = 'array';
-					}
-				} else {
-					s = 'null';
-				}
-			}
-			return s;
-		}
-
 		</script>
 	</head>
-	<body onload="getXmlDoc();">
-		<button onclick="load();">Load</button>
+	<body onload="runTests();">
 	</body>
 </html>

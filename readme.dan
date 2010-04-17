@@ -23,3 +23,17 @@ not sure how we can do this.. unless the item template itself contains the selec
 
 I'm thinking now that the first item of the array should be the selector
 { attr1: "@foo", attr2: "@bar", items: [ "//item", { template... } ] }
+
+..
+what the heck should I call this?
+xqon?
+xquerson
+querson
+xerson
+jsonxpath
+jaspath
+xon
+jaxpath
+japath
+jasath
+jath
