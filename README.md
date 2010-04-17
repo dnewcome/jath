@@ -101,7 +101,7 @@ that will change soon.
 
 # Status
 This software is a proof of concept. There are cases that it cannot handle,
-and isn't production-ready. It is not well tested, and the code here is probably
+and it isn't production-ready. It is not well tested, and the code here is probably
 only sufficient to serve as a reference implementation of the idea.
 
 # Limitations
