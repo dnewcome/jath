@@ -116,3 +116,7 @@ see: https://developer.mozilla.org/en/Introduction_to_using_XPath_in_JavaScript
 - No support for dates or numeric types
 - No support for literal values in templates, ie all values in the template 
 name-value pairs are currently treated as XPath selectors
+
+# License
+Jath is provided under the MIT free software license. See the file LICENSE for 
+the full text.

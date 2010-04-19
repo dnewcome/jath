@@ -1,3 +1,9 @@
+/**
+* Jath is free software provided under the MIT license.
+*	See LICENSE file for full text of the license.
+*	Copyright 2010 Dan Newcome.
+*/
+
 (function() {
 
 Jath = {};
@@ -61,7 +67,10 @@ function parseItem( template, xmldoc, node ) {
 	return xmldoc.evaluate( template, node, null, XPathResult.STRING_TYPE, null ).stringValue;
 }
 
-// crockford's typeOf function
+/**
+* typeOf function published by Douglas Crockford in ECMAScript recommendations
+* http://www.crockford.com/javascript/recommend.html
+*/
 function typeOf(value) {
 	var s = typeof value;
 	if (s === 'object') {

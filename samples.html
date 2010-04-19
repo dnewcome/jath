@@ -12,7 +12,7 @@
 
 				// test case with an array of simple objects
 				var template = [ "//label", { id: "@id", added: "@added" } ];
-				var parsed1 = Jath.parse( template, xmlDoc, xmlDoc );
+				var parsed1 = Jath.parse( template, xmlDoc );
 				
 				// test case with a array of nested objects
 				var template2 = [ 
@@ -25,7 +25,7 @@
 						}
 					} 
 				];
-				var parsed2 = Jath.parse( template2, xmlDoc, xmlDoc );
+				var parsed2 = Jath.parse( template2, xmlDoc );
 				
 				// test case with an array of arrays, the outermost of which
 				// simply appears at the output as a container and is not 
@@ -35,7 +35,7 @@
 					[ "//label", "@id" ],
 					[ "//address", "province" ]
 				];
-				var parsed3 = Jath.parse( template3, xmlDoc, xmlDoc );
+				var parsed3 = Jath.parse( template3, xmlDoc );
 			}			
 				
 			/**
