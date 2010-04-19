@@ -3,6 +3,7 @@
 	<head>
 		<script src="jath.js" type="text/javascript" language="javascript"></script>
 		<script language="javascript">
+			
 			/**
 			* Run samples as rudimentary functionality check. Later these
 			* will form the basis of a test suite.
@@ -76,7 +77,7 @@
 				var parsed8 = Jath.parse( template8, xmlDocDefns );
 				
 				// using prefixes and our own resolver
-				setCustomResolver( { default: 'http://example.com', lbl: 'http://example.com/labelns' } );
+				setCustomResolver( { def: 'http://example.com', lbl: 'http://example.com/labelns' } );
 				var template9 = [ "//lbl:label", { id: "@id", added: "@added" } ];
 				var parsed9 = Jath.parse( template9, xmlDocNs );
 				
@@ -121,11 +122,44 @@
 			* Load xml test data from disk
 			*/
 			function getXmlDoc( filename ) {
+				var xmlDoc;
+				if( browser == 'chrome' ) {
+					xmlDoc = getXmlDocChrome( filename );
+				}
+				else if( browser == 'mozilla' ) {
+					xmlDOc = getXmlDocMozilla( filename );
+				}
+				// using mozilla as the default for now
+				else {
+					xmlDOc = getXmlDocMozilla( filename );
+				}
+				return xmlDoc;
+			}
+			
+			function getXmlDocMozilla( filename ) {
 				xmlDoc = document.implementation.createDocument("", "", null);
 				xmlDoc.async = false;
 				xmlDoc.load( filename );
 				return xmlDoc;
 			}
+			
+			function getXmlDocChrome( filename ) {
+				var xhr = new window.XMLHttpRequest();
+				xhr.open( "GET", filename, false );
+				xhr.send( null );
+				return xhr.responseXML;
+			}
+			
+			/**
+			* Temp hack for doing browser check: TODO: implement proper 
+			* capability checks.
+			*/
+			var browser = 'mozilla';
+			
+			if( navigator.userAgent.toLowerCase().indexOf( 'chrome' ) > -1 ) {
+				browser = 'chrome';
+			}
+			
 		</script>
 	</head>
 	<body onload="runTests();">
