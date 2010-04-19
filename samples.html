@@ -81,6 +81,7 @@
 				var template9 = [ "//lbl:label", { id: "@id", added: "@added" } ];
 				var parsed9 = Jath.parse( template9, xmlDocNs );
 				
+				// test 10 fails on Opera, not sure why yet
 				setDefaultResolver( xmlDocNs );
 				var template10 = [ "//lbl:label", { id: "@id", added: "@added" } ];
 				var parsed10 = Jath.parse( template10, xmlDocNs );
@@ -123,7 +124,7 @@
 			*/
 			function getXmlDoc( filename ) {
 				var xmlDoc;
-				if( browser == 'chrome' ) {
+				if( browser == 'chrome' || browser == 'opera' ) {
 					xmlDoc = getXmlDocChrome( filename );
 				}
 				else if( browser == 'mozilla' ) {
@@ -158,6 +159,9 @@
 			
 			if( navigator.userAgent.toLowerCase().indexOf( 'chrome' ) > -1 ) {
 				browser = 'chrome';
+			}
+			else if( navigator.userAgent.toLowerCase().indexOf( 'opera' ) > -1 ) {
+				browser = 'opera';
 			}
 			
 		</script>
