@@ -124,7 +124,7 @@
 			*/
 			function getXmlDoc( filename ) {
 				var xmlDoc;
-				if( browser == 'chrome' || browser == 'opera' ) {
+				if( browser == 'chrome' || browser == 'opera' || browser == 'safari' ) {
 					xmlDoc = getXmlDocChrome( filename );
 				}
 				else if( browser == 'mozilla' ) {
@@ -162,6 +162,9 @@
 			}
 			else if( navigator.userAgent.toLowerCase().indexOf( 'opera' ) > -1 ) {
 				browser = 'opera';
+			}
+			else if( navigator.userAgent.toLowerCase().indexOf( 'safari' ) > -1 ) {
+				browser = 'safari';
 			}
 			
 		</script>
