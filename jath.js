@@ -8,6 +8,7 @@
 
 Jath = {};
 Jath.parse = parse;
+Jath.resolver = null;
 
 /**
 * parse: 
@@ -37,7 +38,7 @@ function parseArray( template, xmldoc, node ) {
 	var retVal = [];
 	
 	if( template[0] != null ) {
-		var xpathResult = xmldoc.evaluate( template[0], node, null, XPathResult.ANY_TYPE, null );
+		var xpathResult = xmldoc.evaluate( template[0], node, Jath.resolver, XPathResult.ANY_TYPE, null );
 		var thisNode;
 		while( thisNode = xpathResult.iterateNext() ) {
 			retVal.push( parse( template[1], xmldoc, thisNode ) );
@@ -64,7 +65,7 @@ function parseObject( template, xmldoc, node ) {
 }
 
 function parseItem( template, xmldoc, node ) {
-	return xmldoc.evaluate( template, node, null, XPathResult.STRING_TYPE, null ).stringValue;
+	return xmldoc.evaluate( template, node, Jath.resolver, XPathResult.STRING_TYPE, null ).stringValue;
 }
 
 /**
