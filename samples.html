@@ -1,0 +1,133 @@
+<!doctype html>
+<html>
+	<head>
+		<script src="jath.js" type="text/javascript" language="javascript"></script>
+		<script language="javascript">
+			/**
+			* Run samples as rudimentary functionality check. Later these
+			* will form the basis of a test suite.
+			*/
+			function runTests() {
+				
+				/**
+				tests using XML without namespaces, or more correctly, with
+				every element in the null XML namespace
+				**/
+				
+				var xmlDoc = getXmlDoc( "labels.xml" );
+
+				// test case with an array of simple objects
+				var template = [ "//label", { id: "@id", added: "@added" } ];
+				var parsed1 = Jath.parse( template, xmlDoc );
+				
+				// test case with a array of nested objects
+				var template2 = [ 
+					"//label", { 
+						id: "@id", 
+						added: "@added", 
+						address: { 
+							street: "address/street", 
+							city: "address/city" 
+						}
+					} 
+				];
+				var parsed2 = Jath.parse( template2, xmlDoc );
+				
+				// test case with an array of arrays, the outermost of which
+				// simply appears at the output as a container and is not 
+				// filled by iteration over the source XML data
+				var template3 = [ 
+					null,
+					[ "//label", "@id" ],
+					[ "//address", "province" ]
+				];
+				var parsed3 = Jath.parse( template3, xmlDoc );
+				
+				
+				
+				/**
+				XML namespace tests
+				**/
+				
+				var xmlDocNs = getXmlDoc( "labels-ns.xml" );
+				var xmlDocDefns = getXmlDoc( "labels-defns.xml" );
+				
+				// what we were doing before won't work with namespaces
+				var template4 = [ "//label", { id: "@id", added: "@added" } ];
+				var parsed4 = Jath.parse( template4, xmlDocNs );
+				
+				// prove that things don't work with default namespace
+				var template5 = [ "//label", { id: "@id", added: "@added" } ];
+				var parsed5 = Jath.parse( template5, xmlDocDefns );
+				
+				// using different type of xpath query - works with default ns
+				var template6 = [ "//*[namespace-uri()='http://example.com' and name()='label']", { id: "@id", added: "@added" } ];
+				var parsed6 = Jath.parse( template6, xmlDocDefns );
+				
+				// work w/ ns prefixes
+				// note name() will be lbl:label, we need local-name() to refer to unprefixed element
+				var template7 = [ "//*[namespace-uri()='http://example.com/labelns' and local-name()='label']", { id: "@id", added: "@added" } ];
+				var parsed7 = Jath.parse( template7, xmlDocNs );
+
+				// work with default ns using resolver - you have to use prefix for 
+				// resolver to get called (using 'foo'), but resolver doesn't use it.
+				setDefaultNSResolver( 'http://example.com' );
+				var template8 = [ "//foo:label", { id: "@id", added: "@added" } ];
+				var parsed8 = Jath.parse( template8, xmlDocDefns );
+				
+				// using prefixes and our own resolver
+				setCustomResolver( { default: 'http://example.com', lbl: 'http://example.com/labelns' } );
+				var template9 = [ "//lbl:label", { id: "@id", added: "@added" } ];
+				var parsed9 = Jath.parse( template9, xmlDocNs );
+				
+				setDefaultResolver( xmlDocNs );
+				var template10 = [ "//lbl:label", { id: "@id", added: "@added" } ];
+				var parsed10 = Jath.parse( template10, xmlDocNs );
+			}			
+			
+			/**
+			* Set Jath up with custom resolver using given json object as the 
+			* prefix lookup map - eg { prefix: "namespace", ... }
+			*/
+			function setCustomResolver( mappings ) {
+				Jath.resolver = function( prefix ) {
+					return mappings[ prefix ];
+				}
+			}
+				
+			/**
+			* this resolver resolves a given default namespace. Not particularly
+			* useful since it always returns the same namespace for any given 
+			* prefix. TODO: delete this function in lieu of extending 
+			* setCustomResolver to return a default if the prefix is not found, 
+			* which is effectively what this function is doing.
+			*/
+			function setDefaultNSResolver( namespace ) {
+				Jath.resolver = function() {
+					return namespace;
+				};
+			}
+			
+			/**
+			* creates the 'default' Moz resolver - note does not
+			* resolve default namespaces though. All other prefix mappings will
+			* be automatically created however.
+			*/
+			function setDefaultResolver( xmldoc ) {
+				Jath.resolver = xmldoc.createNSResolver( xmldoc );
+			}	
+			
+			/**
+			* Load xml test data from disk
+			*/
+			function getXmlDoc( filename ) {
+				xmlDoc = document.implementation.createDocument("", "", null);
+				xmlDoc.async = false;
+				xmlDoc.load( filename );
+				return xmlDoc;
+			}
+		</script>
+	</head>
+	<body onload="runTests();">
+	</body>
+</html>
