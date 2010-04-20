@@ -11,6 +11,14 @@ Jath.parse = parse;
 Jath.resolver = null;
 
 /**
+* Rudimentary check for IE
+*/
+var m_browser;
+if( navigator.userAgent.toLowerCase().indexOf( 'msie' ) > -1 ) {
+	m_browser = 'msie';
+}
+
+/**
 * parse: 
 *	process xml doc according to the given json template
 *	@template - output spec as a json template
@@ -38,10 +46,20 @@ function parseArray( template, xmldoc, node ) {
 	var retVal = [];
 	
 	if( template[0] != null ) {
-		var xpathResult = xmldoc.evaluate( template[0], node, Jath.resolver, XPathResult.ANY_TYPE, null );
-		var thisNode;
-		while( thisNode = xpathResult.iterateNext() ) {
-			retVal.push( parse( template[1], xmldoc, thisNode ) );
+		if( m_browser == 'msie' ) {
+			xmldoc.setProperty("SelectionLanguage", "XPath");
+			var nodeList = node.selectNodes( template[0] );
+			var thisNode;
+			while( thisNode = nodeList.nextNode() ) {
+				retVal.push( parse( template[1], xmldoc, thisNode ) );
+			}
+		}
+		else {
+			var xpathResult = xmldoc.evaluate( template[0], node, Jath.resolver, XPathResult.ANY_TYPE, null );
+			var thisNode;
+			while( thisNode = xpathResult.iterateNext() ) {
+				retVal.push( parse( template[1], xmldoc, thisNode ) );
+			}
 		}
 	}
 	// we can have an array output without iterating over the source
@@ -65,7 +83,13 @@ function parseObject( template, xmldoc, node ) {
 }
 
 function parseItem( template, xmldoc, node ) {
-	return xmldoc.evaluate( template, node, Jath.resolver, XPathResult.STRING_TYPE, null ).stringValue;
+	if( m_browser == 'msie' ) {
+		xmldoc.setProperty("SelectionLanguage", "XPath");
+		return node.selectSingleNode( template ).text;
+	}
+	else {
+		return xmldoc.evaluate( template, node, Jath.resolver, XPathResult.STRING_TYPE, null ).stringValue;
+	}
 }
 
 /**

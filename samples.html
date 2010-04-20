@@ -58,6 +58,7 @@
 				var parsed4 = Jath.parse( template4, xmlDocNs );
 				
 				// prove that things don't work with default namespace
+				// however, in IE this works
 				var template5 = [ "//label", { id: "@id", added: "@added" } ];
 				var parsed5 = Jath.parse( template5, xmlDocDefns );
 				
@@ -124,7 +125,7 @@
 			*/
 			function getXmlDoc( filename ) {
 				var xmlDoc;
-				if( browser == 'chrome' || browser == 'opera' || browser == 'safari' ) {
+				if( browser == 'chrome' || browser == 'opera' || browser == 'safari' || browser == 'msie' ) {
 					xmlDoc = getXmlDocChrome( filename );
 				}
 				else if( browser == 'mozilla' ) {
@@ -165,6 +166,9 @@
 			}
 			else if( navigator.userAgent.toLowerCase().indexOf( 'safari' ) > -1 ) {
 				browser = 'safari';
+			}
+			else if( navigator.userAgent.toLowerCase().indexOf( 'msie' ) > -1 ) {
+				browser = 'msie';
 			}
 			
 		</script>
