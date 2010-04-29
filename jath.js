@@ -3,7 +3,6 @@
 *	See LICENSE file for full text of the license.
 *	Copyright 2010 Dan Newcome.
 */
-
 (function() {
 
 Jath = {};
@@ -11,10 +10,16 @@ Jath.parse = parse;
 Jath.resolver = null;
 
 /**
-* Rudimentary check for IE
+* Rudimentary environment check 
 */
 var m_browser;
-if( navigator.userAgent.toLowerCase().indexOf( 'msie' ) > -1 ) {
+if( node ) {
+	// running under node.js
+	m_browser = 'node';
+	var xmljs = require( 'libxmljs' );
+	exports.parse = parse;
+}
+else if( navigator.userAgent.toLowerCase().indexOf( 'msie' ) > -1 ) {
 	m_browser = 'msie';
 }
 
@@ -54,6 +59,12 @@ function parseArray( template, xmldoc, node ) {
 				retVal.push( parse( template[1], xmldoc, thisNode ) );
 			}
 		}
+		else if( m_browser == 'node' ) {
+			var nodeList = node.find( template[0] );
+			for( var i=0; i < nodeList.length; i++ ) {
+				retVal.push( parse( template[1], xmldoc, nodeList[i] ) );
+			}
+		}
 		else {
 			var xpathResult = xmldoc.evaluate( template[0], node, Jath.resolver, XPathResult.ANY_TYPE, null );
 			var thisNode;
@@ -86,6 +97,10 @@ function parseItem( template, xmldoc, node ) {
 	if( m_browser == 'msie' ) {
 		xmldoc.setProperty("SelectionLanguage", "XPath");
 		return node.selectSingleNode( template ).text;
+	}
+	else if( m_browser == 'node' ) {
+		require('sys').puts( template );	
+		return node.get( template ).text();
 	}
 	else {
 		return xmldoc.evaluate( template, node, Jath.resolver, XPathResult.STRING_TYPE, null ).stringValue;
