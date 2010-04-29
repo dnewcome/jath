@@ -2,10 +2,11 @@
 Initial test case for node.js support
 run test using node on the commandline:
 % node jathnodetest.js
+*/
 
-var xml = require('/home/dannimda/jath/libxmljs');
+var xml = require('libxmljs');
 var sys = require('sys');
-var jath = require('/home/dannimda/jath/jathnode');
+var jath = require('jath');
 var template = [ "//label", { id: "@id", added: "@added" } ];
 var testFile = xml.parseXmlFile('labels.xml');
 
