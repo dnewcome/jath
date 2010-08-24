@@ -9,13 +9,29 @@
 Jath = {};
 Jath.parse = parse;
 Jath.resolver = null;
+// values prefixed with literal charactar marker will not be
+// treated as xpath expressions and will be output directly
+Jath.literalChar = ":";
 
 /**
 * Rudimentary check for IE
+* Also added support for WSH, uses the same API as IE
 */
 var m_browser;
-if( navigator.userAgent.toLowerCase().indexOf( 'msie' ) > -1 ) {
-	m_browser = 'msie';
+try {
+	if( WScript != undefined ) {
+		m_browser = 'msie';
+	}
+}
+catch( e ) {
+	try {
+		if( navigator.userAgent.toLowerCase().indexOf( 'msie' ) > -1 ) {
+			m_browser = 'msie';
+		}
+	}
+	catch( e ) {
+		m_browser = 'standards';
+	}
 }
 
 /**
@@ -85,10 +101,20 @@ function parseObject( template, xmldoc, node ) {
 function parseItem( template, xmldoc, node ) {
 	if( m_browser == 'msie' ) {
 		xmldoc.setProperty("SelectionLanguage", "XPath");
-		return node.selectSingleNode( template ).text;
+		if( typeOf( template ) == 'string' && template.substring( 0, 1 ) != Jath.literalChar ) {
+			return node.selectSingleNode( template ).text;
+		}
+		else {
+			return template.substring( 1 );
+		}
 	}
 	else {
-		return xmldoc.evaluate( template, node, Jath.resolver, XPathResult.STRING_TYPE, null ).stringValue;
+		if( typeOf( template ) == 'string' && template[0] != Jath.literalChar ) {
+			return xmldoc.evaluate( template, node, Jath.resolver, XPathResult.STRING_TYPE, null ).stringValue;
+		}
+		else {
+			return template.substring( 1 );
+		}
 	}
 }
 
