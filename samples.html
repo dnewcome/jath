@@ -122,11 +122,16 @@
 			
 			/**
 			* Load xml test data from disk
+			* NOTE: start chrome with --allow-file-access-from-files flag in order to 
+			* allow reading the test data from disk
 			*/
 			function getXmlDoc( filename ) {
 				var xmlDoc;
-				if( browser == 'chrome' || browser == 'opera' || browser == 'safari' || browser == 'msie' ) {
+				if( browser == 'chrome' || browser == 'opera' || browser == 'safari' ) {
 					xmlDoc = getXmlDocChrome( filename );
+				}
+				else if( browser == 'msie' ) {
+					xmlDoc = getXmlDocIE( filename );
 				}
 				else if( browser == 'mozilla' ) {
 					xmlDoc = getXmlDocMozilla( filename );
@@ -150,8 +155,18 @@
 				xhr.open( "GET", filename, false );
 				xhr.send( null );
 				return xhr.responseXML;
+
 			}
 			
+			function getXmlDocIE( filename ) {
+				var xmlDoc = new ActiveXObject("MSXML2.DOMDocument.3.0");
+				xmlDoc.async = false;
+				xmlDoc.setProperty( "SelectionLanguage", "XPath" );
+				xmlDoc.resolveExternals = false;
+				xmlDoc.load( filename );
+				return xmlDoc;
+			}
+
 			/**
 			* Temp hack for doing browser check: TODO: implement proper 
 			* capability checks.
