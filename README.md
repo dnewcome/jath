@@ -99,23 +99,27 @@ array, expressed in JSON, would look something like the following
 Jath does not support anything other than string data right now, hopefully
 that will change soon.
 
+Literal content may be added to the template by prefixing the value with a semicolon. For example:
+
+    var template [ "//status", { id: "@id", message: ":literaldata" } ];
+
+The character used to denote literal data can be changed by assigning a different value to:
+    
+    JSON.literalChar
+
+Only a single character may be used as a denotator, not a longer string.
+
 # Status
 This software is a proof of concept. There are cases that it cannot handle,
 and it isn't production-ready. It is not well tested, and the code here is probably
 only sufficient to serve as a reference implementation of the idea.
 
+# Supported environments
+Jath fully supports Firefox, Safari, Chrome and Windows Script Host. Opera is mostly supported, and IE lacks namespace handling.
+
 # Limitations
-- Only supports Firefox
-- No built-in support for XML namespaces. This can be worked around by using selectors
-in the form of
-
-	[namespace-uri()='http://www.w3.org/1999/xhtml' and name()='p' and @id='_myid']
-
-see: https://developer.mozilla.org/en/Introduction_to_using_XPath_in_JavaScript
 
 - No support for dates or numeric types
-- No support for literal values in templates, ie all values in the template 
-name-value pairs are currently treated as XPath selectors
 
 # License
 Jath is provided under the MIT free software license. See the file LICENSE for 
