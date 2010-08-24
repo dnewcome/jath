@@ -3,7 +3,6 @@
 *	See LICENSE file for full text of the license.
 *	Copyright 2010 Dan Newcome.
 */
-
 (function() {
 
 Jath = {};
@@ -18,18 +17,19 @@ Jath.literalChar = ":";
 * Also added support for WSH, uses the same API as IE
 */
 var m_browser;
-try {
-	if( WScript != undefined ) {
+	if( typeof WScript != "undefined" ) {
 		m_browser = 'msie';
 	}
-}
-catch( e ) {
-	try {
-		if( navigator.userAgent.toLowerCase().indexOf( 'msie' ) > -1 ) {
-			m_browser = 'msie';
-		}
+	else if( typeof node != "undefined" ) {
+		// running under node.js
+		m_browser = 'node';
+		var xmljs = require( 'libxmljs' );
+		exports.parse = parse;
 	}
-	catch( e ) {
+	else if( navigator.userAgent.toLowerCase().indexOf( 'msie' ) > -1 ) {
+		m_browser = 'msie';
+	}
+	else {
 		m_browser = 'standards';
 	}
 }
@@ -70,6 +70,12 @@ function parseArray( template, xmldoc, node ) {
 				retVal.push( parse( template[1], xmldoc, thisNode ) );
 			}
 		}
+		else if( m_browser == 'node' ) {
+			var nodeList = node.find( template[0] );
+			for( var i=0; i < nodeList.length; i++ ) {
+				retVal.push( parse( template[1], xmldoc, nodeList[i] ) );
+			}
+		}
 		else {
 			var xpathResult = xmldoc.evaluate( template[0], node, Jath.resolver, XPathResult.ANY_TYPE, null );
 			var thisNode;
@@ -107,6 +113,10 @@ function parseItem( template, xmldoc, node ) {
 		else {
 			return template.substring( 1 );
 		}
+	}
+	else if( m_browser == 'node' ) {
+		require('sys').puts( template );	
+		return node.get( template ).text();
 	}
 	else {
 		if( typeOf( template ) == 'string' && template[0] != Jath.literalChar ) {
