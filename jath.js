@@ -17,21 +17,20 @@ Jath.literalChar = ":";
 * Also added support for WSH, uses the same API as IE
 */
 var m_browser;
-	if( typeof WScript != "undefined" ) {
-		m_browser = 'msie';
-	}
-	else if( typeof node != "undefined" ) {
-		// running under node.js
-		m_browser = 'node';
-		var xmljs = require( 'libxmljs' );
-		exports.parse = parse;
-	}
-	else if( navigator.userAgent.toLowerCase().indexOf( 'msie' ) > -1 ) {
-		m_browser = 'msie';
-	}
-	else {
-		m_browser = 'standards';
-	}
+if( typeof WScript != "undefined" ) {
+	m_browser = 'msie';
+}
+else if( typeof node != "undefined" ) {
+	// running under node.js
+	m_browser = 'node';
+	var xmljs = require( 'libxmljs' );
+	exports.parse = parse;
+}
+else if( navigator.userAgent.toLowerCase().indexOf( 'msie' ) > -1 ) {
+	m_browser = 'msie';
+}
+else {
+	m_browser = 'standards';
 }
 
 /**

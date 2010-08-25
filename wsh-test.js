@@ -1,9 +1,3 @@
-var ForReading = 1;
-var fso = new ActiveXObject("Scripting.FileSystemObject");
-var a = fso.OpenTextFile( filename, ForReading );
-var data = a.ReadAll();
-
-// var xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
 var xmlDoc = new ActiveXObject("MSXML2.DOMDocument.6.0");
 
 xmlDoc.async = false;
