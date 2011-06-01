@@ -20,7 +20,8 @@ var m_browser;
 if( typeof WScript != "undefined" ) {
 	m_browser = 'msie';
 }
-else if( typeof node != "undefined" ) {
+// TODO: is there a better way to detect node.js?
+else if( typeof process != "undefined" ) {
 	// running under node.js
 	m_browser = 'node';
 	var xmljs = require( 'libxmljs' );
