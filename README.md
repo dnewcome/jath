@@ -109,6 +109,36 @@ The character used to denote literal data can be changed by assigning a differen
 
 Only a single character may be used as a denotator, not a longer string.
 
+## XML Namespaces
+
+Often more complex XML documents will define [namespaces](http://www.w3.org/TR/REC-xml-names/) to qualify element tag names. When performing Jath queries on namespaced documents you should [implement a namespace resolver](https://developer.mozilla.org/en/Introduction_to_using_XPath_in_JavaScript#Implementing_a_Default_Namespace_Resolver). Once a namespace resolver has been defined it can be set on Jath as follows:
+
+    Jath.resolver = myResolver
+
+### Implementing a Namespace Resolver
+
+There are two ways to implement XPath namespace resolvers:
+
+1. write a function that takes a namespace prefix as an argument and returns the namesace uri:
+
+    Jath.resolver = function(prefix) {
+    	if(prefix === "foo") {
+    		return "http://beebop.com/"
+    	}
+    	if(prefix === "bar") {
+    		return "http://rocksteady.com/"
+    	}
+    }
+
+2. use the `dom.createNSResolver()` method. As an argument this element takes a dom node containing namespace definitions. For example consider the following xml doc:
+
+    <labels xmlns="http://example.com" xmlns:lbl="http://example.com/labelns">
+      <lbl:label id='ep' added="2003-06-10">
+        <name>Shredder</name>
+        <dimension>X</dimension>
+      </lbl:label> 
+    </labels>  
+
 # Status
 This software is a proof of concept. There are cases that it cannot handle,
 and it isn't production-ready. It is not well tested, and the code here is probably
