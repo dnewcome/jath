@@ -121,6 +121,7 @@ There are two ways to implement XPath namespace resolvers:
 
 1. write a function that takes a namespace prefix as an argument and returns the namesace uri:
 
+```javascript
     Jath.resolver = function(prefix) {
     	if(prefix === "foo") {
     		return "http://beebop.com/"
@@ -129,15 +130,49 @@ There are two ways to implement XPath namespace resolvers:
     		return "http://rocksteady.com/"
     	}
     }
+```
 
 2. use the `dom.createNSResolver()` method. As an argument this element takes a dom node containing namespace definitions. For example consider the following xml doc:
 
-    <labels xmlns="http://example.com" xmlns:lbl="http://example.com/labelns">
-      <lbl:label id='ep' added="2003-06-10">
-        <name>Shredder</name>
-        <dimension>X</dimension>
-      </lbl:label> 
-    </labels>  
+```xml
+<labels xmlns="http://example.com" xmlns:lbl="http://example.com/labelns">
+  <lbl:label id='ep' added="2003-06-10">
+    <name>Shredder</name>
+    <dimension>X</dimension>
+  </lbl:label> 
+</labels>  
+```
+
+then the resolver could be defined as follows:
+
+    Jath.resolver = document.createNSResolver(document.documentElement)
+    
+### Default Namespaces
+
+XPath does not tollerate non-null default namespaces. For example:
+
+```xml
+<labels xmlns="http://teenage.com" >
+  <label id='ep' added="2003-06-10">
+    <name>Shredder</name>
+    <dimension>X</dimension>
+  </label> 
+</labels>
+```
+
+One way to get this working is to manually define a default namespace prefix and write a resolver that returns the default namespace uri in response to it:
+
+```javascript
+Jath.resolver = function(prefix) {
+  if(prefix === "dlt") {
+    return "http://teenage.com"
+  }
+}
+```
+
+and then prefix your elements with this default prefix in Jath queries:
+
+    Jath.parse( {turtle: "//dlt:name"}, dom )
 
 # Status
 This software is a proof of concept. There are cases that it cannot handle,
