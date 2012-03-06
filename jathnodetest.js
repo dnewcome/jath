@@ -4,12 +4,14 @@ run test using node on the commandline:
 % node jathnodetest.js
 */
 
+var fs = require('fs');
 var xml = require('libxmljs');
-var sys = require('sys');
-var jath = require('jath');
+var util = require('util');
+var jath = require('./jath');
 var template = [ "//label", { id: "@id", added: "@added" } ];
-var testFile = xml.parseXmlFile('labels.xml');
 
-var result = jath.parse( template, testFile );
-
-sys.puts( sys.inspect( result, false, 10 ) );
+fs.readFile('labels.xml', 'ascii', function(err, data) {
+  var xmlDoc = xml.parseXmlString(data);
+  var result = jath.parse(template, xmlDoc);
+  util.puts(util.inspect(result, false, 10));
+});
