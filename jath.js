@@ -115,7 +115,7 @@ function parseItem( template, xmldoc, node ) {
 		}
 	}
 	else if( m_browser == 'node' ) {
-		require('sys').puts( template );	
+		require('util').puts( template );	
 		return node.get( template ).text();
 	}
 	else {
