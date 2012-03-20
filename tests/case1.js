@@ -20,35 +20,6 @@ test( "statuses", function() {
 	deepEqual( result, expected );
 } );
 
-/*
-test( "fixed recursive", function() {
-
-	var xml = 
-		'<item name="foo">' +
-			'<status code="1" />' +
-			'<item name="bar">' +
-				'<status code="2" />' +
-			'</item>'+
-			'<item name="baz">' +
-				'<status code="3" />' +
-				'<item name="biff">' +
-					'<status code="4" />' +
-				'</item>' +
-			'</item>' +
-		'</item>';
-	
-	// var template = [ 'item', { name: '@name', items: [ 'item', { name: '@name' } ] } ];
-	
-	var ttemplate = [ 'item', { name: '@name', items: [] } ];
-	var template1 = [ 'item', { name: '@name', items: ttemplate } ];
-	var template = [ 'item', { name: '@name', items: template1 } ];
-
-	var result = Jath.parse( template, createXmlDoc( xml ) );
-
-
-});
-*/
-
 test( "fully recursive", function() {
 
 	var xml = 
@@ -65,13 +36,42 @@ test( "fully recursive", function() {
 			'</item>' +
 		'</item>';
 	
-	// var template = [ 'item', { name: '@name', items: '+template' } ];
 	var template = [ 'item', { name: '@name', status: 'status/@code' } ];
 	template[1].items = template;
 
-	var result = Jath.parse( template, createXmlDoc( xml ) );
-	console.log( result );
+	var expected = [
+		{"name":"foo","status":"1","items":[
+			{"name":"bar","status":"2","items":[]},
+			{"name":"baz","status":"3","items":[
+				{ "name":"biff","status":"4","items":[]}]}]}
+	];
 
+	var result = Jath.parse( template, createXmlDoc( xml ) );
+	deepEqual( result, expected );
+
+});
+
+test( "arraylike", function() {
+	var xml = 
+	'<root>' +
+	  '<a>' +
+		'<b>123</b>' +
+		'<b>456</b>' +
+		'<b>789</b>' +
+	  '</a>' +
+	  '<a>' +
+		'<b>foo</b>' +
+		'<b>bar</b>' +
+	  '</a>' +
+	'</root>'; 
+	console.log( xml );
+
+	var template = [ '//a', [ 'b', 'text()' ] ];
+
+	var result = Jath.parse( template, createXmlDoc( xml ) );
+
+	var expected = [ ["123","456","789"], ["foo","bar"] ];
+	deepEqual( result, expected );
 });
 
 // adapted from 
