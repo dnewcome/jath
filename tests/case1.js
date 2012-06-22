@@ -74,6 +74,49 @@ test( "arraylike", function() {
 	deepEqual( result, expected );
 });
 
+test("nested-array", function() {
+	var xml = 
+	'<container>' +
+	'<label id="ep" added="2003-06-10">' +
+		'<name>Ezra Pound</name>' +
+		'<address>' +
+		  '<street>45 Usura Place</street>' +
+		  '<city>Hailey</city>' +
+		  '<province>ID</province>' +
+		'</address>' +
+	  '</label>' +
+	  '<label id="ep2" added="2003-06-20">' +
+		'<name>Siju</name>' +
+		'<address>' +
+		  '<street>3 Prufrock Lane</street>' +
+		  '<city>Stamford</city>' +
+		  '<province>ID</province>' +
+		'</address>' +
+		'<address>' +
+		  '<street>2nd address</street>' +
+		  '<city>2nd city</city>' +
+		  '<province>2nd id</province>' +
+		'</address>' +
+		'<address>' +
+		  '<street>3rd address</street>' +
+		  '<city>3rd city</city>' +
+		  '<province>3rd id</province>' +
+		'</address>' +
+	  '</label>' +
+	  '</container>';
+
+	console.log( xml );
+
+	var template = [ 
+		'//label', { 'id': '@id', 'added': '@added', 
+			'address': [ 'address', { 'street': 'street', 'city': 'city' } ] 
+	} ];
+
+	var result = Jath.parse( template, createXmlDoc( xml ) );
+	var expected = [{"id":"ep","added":"2003-06-10","address":[{"street":"45 Usura Place","city":"Hailey"}]},{"id":"ep2","added":"2003-06-20","address":[{"street":"3 Prufrock Lane","city":"Stamford"},{"street":"2nd address","city":"2nd city"},{"street":"3rd address","city":"3rd city"}]}];
+	deepEqual( result, expected );
+
+} );
 // adapted from 
 // http://help.dottoro.com/ljssopjn.php
 function createXmlDoc( str ) {
