@@ -76,7 +76,7 @@ test( "arraylike", function() {
 
 test("nested-array", function() {
 	var xml = 
-	'<container>' +
+	'<labels>' +
 	'<label id="ep" added="2003-06-10">' +
 		'<name>Ezra Pound</name>' +
 		'<address>' +
@@ -103,7 +103,7 @@ test("nested-array", function() {
 		  '<province>3rd id</province>' +
 		'</address>' +
 	  '</label>' +
-	  '</container>';
+	  '</labels>';
 
 	console.log( xml );
 

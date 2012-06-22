@@ -36,4 +36,12 @@
       <province>Anambra</province>
     </address>
   </label>
+  <label id="co">
+    <name>Christopher Okigbo</name>
+    <address>
+      <street>7 Heaven's Gate</street>
+      <city>Idoto</city>
+      <province>Anambra</province>
+    </address>
+  </label>
 </labels>
