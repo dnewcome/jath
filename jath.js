@@ -116,7 +116,14 @@ function parseItem( template, xmldoc, node ) {
 	}
 	else if( m_browser == 'node' ) {
 		require('util').puts( template );	
-		return node.get( template ).text();
+			// node can be null if query fails
+			var itemNode = node.get( template );
+			if( itemNode ) {
+				return itemNode.text();
+			}
+			else {
+				return null;
+			}
 	}
 	else {
 		if( typeOf( template ) == 'string' && template[0] != Jath.literalChar ) {
