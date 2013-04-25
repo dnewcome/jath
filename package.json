@@ -5,15 +5,15 @@
   "version": "0.0.1",
   "dependencies": {
     "libxmljs": "0.5.4"
-  }
+  },
   "contributors": [ 
     {
       "name": "Tom Spencer",
       "email": "fiznool@gmail.com"
     },
     {
-      "name": "Matthew Robertson",
+      "name": "Matthew Robertson"
     } 
-
-  ],
+  ]
 }
+
