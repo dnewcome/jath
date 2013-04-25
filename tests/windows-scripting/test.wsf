@@ -2,7 +2,7 @@
 	<script>
 		// var navigator = { userAgent: 'msie' };
 	</script>
-	<script src="jath.js"/>
+	<script src="..\..\jath.js"/>
 	<script src="json2.js"/>
 	<script src="wsh-test.js"/>
 </job>
