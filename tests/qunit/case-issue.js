@@ -28,6 +28,7 @@ test( "issue16", function() {
 	Jath.resolver = function( prefix ) {
 	    return mappings[ prefix ];
 	}
+  	Jath.namespaces = mappings;
 
 	var template = [ 
 		'/s:Envelope/s:Body/l:GetAccountDetailsResponse/l:GetAccountDetailsResult/l:Data', {

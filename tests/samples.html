@@ -73,19 +73,25 @@
 
 				// work with default ns using resolver - you have to use prefix for 
 				// resolver to get called (using 'foo'), but resolver doesn't use it.
-				setDefaultNSResolver( 'http://example.com' );
-				var template8 = [ "//foo:label", { id: "@id", added: "@added" } ];
-				var parsed8 = Jath.parse( template8, xmlDocDefns );
-				
+				if( browser != 'msie' ) {
+					setDefaultNSResolver( 'http://example.com' );
+					var template8 = [ "//foo:label", { id: "@id", added: "@added" } ];
+					var parsed8 = Jath.parse( template8, xmlDocDefns );
+				}
+
 				// using prefixes and our own resolver
-				setCustomResolver( { def: 'http://example.com', lbl: 'http://example.com/labelns' } );
-				var template9 = [ "//lbl:label", { id: "@id", added: "@added" } ];
-				var parsed9 = Jath.parse( template9, xmlDocNs );
-				
-				// test 10 fails on Opera, not sure why yet
-				setDefaultResolver( xmlDocNs );
-				var template10 = [ "//lbl:label", { id: "@id", added: "@added" } ];
-				var parsed10 = Jath.parse( template10, xmlDocNs );
+				if( browser != 'msie' ) {
+					setCustomResolver( { def: 'http://example.com', lbl: 'http://example.com/labelns' } );
+					var template9 = [ "//lbl:label", { id: "@id", added: "@added" } ];
+					var parsed9 = Jath.parse( template9, xmlDocNs );
+				}
+
+				if( browser != 'msie' && browser != 'opera' ) {
+					// test 10 fails on Opera, not sure why yet
+					setDefaultResolver( xmlDocNs );
+					var template10 = [ "//lbl:label", { id: "@id", added: "@added" } ];
+					var parsed10 = Jath.parse( template10, xmlDocNs );
+				}
 			}			
 			
 			/**

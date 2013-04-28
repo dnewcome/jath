@@ -8,6 +8,8 @@
 Jath = {};
 Jath.parse = parse;
 Jath.resolver = null;
+Jath.namespaces = null;
+
 // values prefixed with literal charactar marker will not be
 // treated as xpath expressions and will be output directly
 Jath.literalChar = ":";
@@ -64,6 +66,7 @@ function parseArray( template, xmldoc, node ) {
 	if( template[0] != null ) {
 		if( m_browser == 'msie' ) {
 			xmldoc.setProperty("SelectionLanguage", "XPath");
+			xmldoc.setProperty("SelectionNamespaces", createResolverString() );			
 			var nodeList = node.selectNodes( template[0] );
 			var thisNode;
 			while( thisNode = nodeList.nextNode() ) {
@@ -107,8 +110,14 @@ function parseObject( template, xmldoc, node ) {
 function parseItem( template, xmldoc, node ) {
 	if( m_browser == 'msie' ) {
 		xmldoc.setProperty("SelectionLanguage", "XPath");
+		xmldoc.setProperty("SelectionNamespaces", createResolverString() );
 		if( typeOf( template ) == 'string' && template.substring( 0, 1 ) != Jath.literalChar ) {
-			return node.selectSingleNode( template ).text;
+			if( node.selectSingleNode( template ) != null ) {
+					return node.selectSingleNode( template ).text;
+			}
+			else {
+				return null;
+			}
 		}
 		else {
 			return template.substring( 1 );
@@ -152,6 +161,24 @@ function typeOf(value) {
 		}
 	}
 	return s;
+}
+
+/**
+* IE requires namespaces to be in the form that 
+* an xml document would provide. Use underscore
+* for default ns.
+*/
+function createResolverString() {
+	var retval = [];
+	for( var item in Jath.namespaces ) {
+		if( item == "_" ) {
+			retval.push( "xmlns='" + Jath.namespaces[item] + "'" );
+		}
+		else {
+			retval.push( "xmlns:" + item + "='" + Jath.namespaces[item] + "'" );
+		}
+	}
+	return retval.join(" ");
 }
 
 })();
