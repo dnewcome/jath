@@ -53,15 +53,16 @@ test( "issue16", function() {
 // http://help.dottoro.com/ljssopjn.php
 function createXmlDoc( str ) {
 	var xmlDoc = null;
-	if( window.DOMParser ) {
-		var parser = new DOMParser();
-		xmlDoc = parser.parseFromString( str, "text/xml" );
-	} 
-	else if( window.ActiveXObject ) {
+	if( window.ActiveXObject ) {
 		xmlDoc = new ActiveXObject( "Microsoft.XMLDOM" );
 		xmlDoc.async = false;
 		xmlDoc.loadXML( str );
 	}
+	else if( window.DOMParser ) {
+		var parser = new DOMParser();
+		xmlDoc = parser.parseFromString( str, "text/xml" );
+	} 
+	
 	return xmlDoc;
 }
 
