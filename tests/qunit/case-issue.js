@@ -28,6 +28,7 @@ test( "issue16", function() {
 	Jath.resolver = function( prefix ) {
 	    return mappings[ prefix ];
 	}
+  	Jath.namespaces = mappings;
 
 	var template = [ 
 		'/s:Envelope/s:Body/l:GetAccountDetailsResponse/l:GetAccountDetailsResult/l:Data', {
@@ -52,15 +53,16 @@ test( "issue16", function() {
 // http://help.dottoro.com/ljssopjn.php
 function createXmlDoc( str ) {
 	var xmlDoc = null;
-	if( window.DOMParser ) {
-		var parser = new DOMParser();
-		xmlDoc = parser.parseFromString( str, "text/xml" );
-	} 
-	else if( window.ActiveXObject ) {
+	if( window.ActiveXObject ) {
 		xmlDoc = new ActiveXObject( "Microsoft.XMLDOM" );
 		xmlDoc.async = false;
 		xmlDoc.loadXML( str );
 	}
+	else if( window.DOMParser ) {
+		var parser = new DOMParser();
+		xmlDoc = parser.parseFromString( str, "text/xml" );
+	} 
+	
 	return xmlDoc;
 }
 
