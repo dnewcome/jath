@@ -108,41 +108,43 @@ function parseObject( template, xmldoc, node ) {
 }
 
 function parseItem( template, xmldoc, node ) {
-	if( m_browser == 'msie' ) {
-		xmldoc.setProperty("SelectionLanguage", "XPath");
-		xmldoc.setProperty("SelectionNamespaces", createResolverString() );
-		if( typeOf( template ) == 'string' && template.substring( 0, 1 ) != Jath.literalChar ) {
+	if( typeOf( template ) == 'string' && template.substring( 0, 1 ) != Jath.literalChar ) {
+		if( m_browser == 'msie' ) {
+			xmldoc.setProperty("SelectionLanguage", "XPath");
+			xmldoc.setProperty("SelectionNamespaces", createResolverString() );
 			if( node.selectSingleNode( template ) != null ) {
-					return node.selectSingleNode( template ).text;
+				return node.selectSingleNode( template ).text;
+			}
+			else {
+				return null;
+			}
+		}
+		else if( m_browser == 'node' ) {
+			var itemNode = node.get( template );
+			if( itemNode && itemNode.text ) {
+				return itemNode.text();
+			}
+			else if( itemNode && itemNode.value ) {
+				return itemNode.value();
 			}
 			else {
 				return null;
 			}
 		}
 		else {
-			return template.substring( 1 );
-		}
-	}
-	else if( m_browser == 'node' ) {
-		var itemNode = node.get( template );
-		if( itemNode && itemNode.text ) {
-			return itemNode.text();
-		}
-		else if( itemNode && itemNode.value ) {
-			return itemNode.value();
-		}
-		else {
-			return null;
+			var itemNode = xmldoc.evaluate( template, node, Jath.resolver, XPathResult.STRING_TYPE, null ); 
+			if( itemNode ) {
+				return itemNode.stringValue;
+			}
+			else {
+				return null;
+			}
 		}
 	}
 	else {
-		if( typeOf( template ) == 'string' && template[0] != Jath.literalChar ) {
-			return xmldoc.evaluate( template, node, Jath.resolver, XPathResult.STRING_TYPE, null ).stringValue;
-		}
-		else {
-			return template.substring( 1 );
-		}
+		return template.substring( 1 );
 	}
+
 }
 
 /**
