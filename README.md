@@ -107,7 +107,7 @@ The character used to denote literal data can be changed by assigning a differen
     
     JSON.literalChar
 
-Only a single character may be used as a denotator, not a longer string.
+Only a single character may be used to denote a literal.
 
 ## XML Namespaces
 
@@ -149,7 +149,7 @@ then the resolver could be defined as follows:
     
 ### Default Namespaces
 
-XPath does not tollerate non-null default namespaces. For example:
+XPath does not tolerate non-null default namespaces. For example:
 
 ```xml
 <labels xmlns="http://teenage.com" >
@@ -175,12 +175,12 @@ and then prefix your elements with this default prefix in Jath queries:
     Jath.parse( {turtle: "//dlt:name"}, dom )
 
 # Status
-This software is a proof of concept. There are cases that it cannot handle,
-and it isn't production-ready. It is not well tested, and the code here is probably
-only sufficient to serve as a reference implementation of the idea.
+This software is still evolving. There are likely cases that it cannot handle, so 
+file a feature request in github if there is something you think it should do.
 
 # Supported environments
-Jath fully supports Firefox, Safari, Chrome and Windows Script Host. Opera is mostly supported, and IE lacks namespace handling.
+Jath fully supports Node.js, Firefox, Safari, Chrome and Windows Script Host. IE and Opera are mostly supported.
+More test coverage would help here.
 
 # Limitations
 
