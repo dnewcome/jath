@@ -124,10 +124,12 @@ function parseItem( template, xmldoc, node ) {
 		}
 	}
 	else if( m_browser == 'node' ) {
-		// node can be null if query fails
 		var itemNode = node.get( template );
-		if( itemNode ) {
+		if( itemNode && itemNode.text ) {
 			return itemNode.text();
+		}
+		else if( itemNode && itemNode.value ) {
+			return itemNode.value();
 		}
 		else {
 			return null;
