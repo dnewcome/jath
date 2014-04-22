@@ -3,6 +3,7 @@
   "author": "Dan Newcome, @dnewcome",
   "description": "Declarative XML-to-JSON transformation",
   "version": "0.0.2",
+  "main": "./jath.js",
   "dependencies": {
     "libxmljs": "0.8.1"
   },
