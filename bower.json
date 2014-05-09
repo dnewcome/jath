@@ -5,8 +5,7 @@
   "homepage": "https://github.com/dnewcome/jath",
   "description": "Declarative XML-to-JSON transformation",
   "authors": [
-    "Dan Newcome",
-    "@dnewcome"
+    "Dan Newcome (@dnewcome)"
   ],
   "license": "MIT",
   "ignore": [
