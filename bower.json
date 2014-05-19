@@ -1,7 +1,7 @@
 {
   "name": "jath",
   "main": "jath.js",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "homepage": "https://github.com/dnewcome/jath",
   "description": "Declarative XML-to-JSON transformation",
   "authors": [
