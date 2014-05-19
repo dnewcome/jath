@@ -1,0 +1,17 @@
+{
+  "name": "jath",
+  "main": "jath.js",
+  "version": "0.0.2",
+  "homepage": "https://github.com/dnewcome/jath",
+  "description": "Declarative XML-to-JSON transformation",
+  "authors": [
+    "Dan Newcome (@dnewcome)"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "bower_components",
+    "qunit",
+    "tests"
+  ]
+}
